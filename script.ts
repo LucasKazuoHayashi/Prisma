@@ -61,21 +61,15 @@ async function main() {
     },
   });
 
-  console.log("========================================");
-  console.log("                  queries               ");
-  console.log("========================================");
-  const users = await prisma.user.findMany({
+  await prisma.user.findMany({
     include: {
       authors: true,
     },
   });
 
-  console.log("query nativa!!!");
   await prisma.$queryRaw<User[]>(
     Prisma.sql`update user set name = 'TesteTeste' where email like '%Teste'`
   );
-
-  users.forEach((u) => console.log(u.email));
 }
 
 main()
